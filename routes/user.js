@@ -7,8 +7,13 @@ const userController =  require('../controllers/user')
 router.route('/')
     .get(userController.getAllUser)
     .post(userController.createNewUser)
-    // .patch()
-    // .put()
+
     // .delete()
+
+
+router.route('/:userID')
+    .get(userController.getUser)
+    .patch(userController.updateUser)
+    .put(userController.replaceUser)
     
 module.exports =  router;
