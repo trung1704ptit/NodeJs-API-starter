@@ -25,6 +25,10 @@ const createNewUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
     // Update user with some fields
+    const { userID } = req.params
+    const newUser = req.body
+    const result = await User.findByIdAndUpdate(userID, newUser)
+    return res.status(200).json({ success: true })
 }
 
 const replaceUser = async (req, res, next) => {
@@ -32,7 +36,7 @@ const replaceUser = async (req, res, next) => {
     const { userID } = req.params
     const newUser = req.body
     const result = await User.findByIdAndUpdate(userID, newUser)
-    return res.status(200).json({ user: newUser })
+    return res.status(200).json({ success: true })
 }
 
 module.exports = {
