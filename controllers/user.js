@@ -8,7 +8,7 @@ const Deck = require('../models/Deck');
 - Async/Await
 */
 const getUser = async (req, res, next) => {
-    const { userID } = req.params
+    const { userID } = req.value.params
     const user = await User.findById(userID)
     return res.status(200).json({ user })
 }
