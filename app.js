@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser');
 const express =  require('express');
+const secureApp = require('helmet');
 const logger = require('morgan')
 const userRoute = require('./routes/user');
 const deckRoute = require('./routes/deck');
@@ -14,6 +15,7 @@ mongoClient.connect('mongodb://192.168.0.103:27017/nodejsapistarter')
 
 
 const app = express()
+app.use(secureApp())
 
 // middleware
 app.use(logger('dev'))
