@@ -14,15 +14,15 @@ const getUser = async (req, res, next) => {
 }
 
 const getUserDecks = async (req, res, next) => {
-    const { userID } = req.params
+    const { userID } = req.value.params
     const user = await User.findById(userID).populate('decks')
     return res.status(200).json({ decks: user.decks })
 }
 
 const newUserDeck = async (req, res, next) => {
-    const { userID } = req.params
+    const { userID } = req.value.params
     // Create a new deck
-    const newDeck = new Deck(req.body)
+    const newDeck = new Deck(req.value.body)
 
     // Get user
     const user = await User.findById(userID)
@@ -48,23 +48,23 @@ const getAllUser = async (req, res, next) => {
 }
 
 const newUser = async (req, res, next) => {
-    const newUser = new User(req.body)
+    const newUser = new User(req.value.body)
     await newUser.save()
     return res.status(201).json({user: newUser})
 }
 
 const updateUser = async (req, res, next) => {
     // Update user with some fields
-    const { userID } = req.params
-    const newUser = req.body
+    const { userID } = req.value.params
+    const newUser = req.value.body
     const result = await User.findByIdAndUpdate(userID, newUser)
     return res.status(200).json({ success: true })
 }
 
 const replaceUser = async (req, res, next) => {
     // Enforce new user to old user
-    const { userID } = req.params
-    const newUser = req.body
+    const { userID } = req.value.params
+    const newUser = req.value.body
     const result = await User.findByIdAndUpdate(userID, newUser)
     return res.status(200).json({ success: true })
 }

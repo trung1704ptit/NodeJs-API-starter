@@ -2,6 +2,8 @@ const bodyParser = require('body-parser');
 const express =  require('express');
 const logger = require('morgan')
 const userRoute = require('./routes/user');
+const deckRoute = require('./routes/deck');
+
 const mongoClient = require('mongoose')
 
 
@@ -17,8 +19,12 @@ const app = express()
 app.use(logger('dev'))
 app.use(bodyParser.json())
 
+// deck routes
+app.use('/decks', deckRoute)
+
 // user routes
 app.use('/users', userRoute)
+
 
 // routes
 app.get('/', (req, res,next) => {
