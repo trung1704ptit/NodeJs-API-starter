@@ -31,6 +31,16 @@ const validateParam = (schema, name) => {
 }
 
 const schemas = {
+    authSignUpSchema: Joi.object().keys({
+        firstName: Joi.string().min(2).required(),
+        lastName: Joi.string().min(2).required(),
+        email: Joi.string().email().required(),
+        password: Joi.string().min(6).required()
+    }),
+    authSignInSchema: Joi.object().keys({
+        email: Joi.string().email().required(),
+        password: Joi.string().min(6).required()
+    }),
     deckSchema: Joi.object().keys({
         name: Joi.string().min(6).required(),
         description: Joi.string().min(10).required(),

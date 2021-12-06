@@ -69,6 +69,28 @@ const replaceUser = async (req, res, next) => {
     return res.status(200).json({ success: true })
 }
 
+const signUp =  async (req, res, next) => {
+    const { firstName, lastName, email, password } = req.value.body;
+    // check if user with email already exist
+    const userFound = await User.findOne({ email })
+    if (userFound) {
+      return res.status(403).json({ error: { message: 'Email already registered' }})
+    }
+    console.log(userFound)
+    // Create a new User
+    const user = new User({ firstName, lastName, email, password })
+    await user.save()
+    return res.status(201).json({ success: true })
+}
+
+const signIn =  async (req, res, next) => {
+    console.log('call signin')
+}
+
+const secret =  async (req, res, next) => {
+    console.log('call secret')
+}
+
 module.exports = {
     getUser,
     getAllUser,
@@ -76,5 +98,8 @@ module.exports = {
     newUser,
     newUserDeck,
     updateUser,
-    replaceUser
+    replaceUser,
+    secret,
+    signIn,
+    signUp
 }
