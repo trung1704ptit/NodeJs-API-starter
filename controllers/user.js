@@ -1,6 +1,18 @@
 
 const User = require('../models/User');
 const Deck = require('../models/Deck');
+const JWT = require('jsonwebtoken');
+
+const { JWT_SECRET } = require('../configs')
+
+const encodeToken = userID => {
+  return JWT.sign({
+    iss: 'Trung Nguyen',
+    sub: userID,
+    iat: new Date().getTime(),
+    exp: new Date().setDate(new Date().getDate() + 3)
+  }, JWT_SECRET)
+}
 
 /*
 - Callback
@@ -80,6 +92,9 @@ const signUp =  async (req, res, next) => {
     // Create a new User
     const user = new User({ firstName, lastName, email, password })
     await user.save()
+
+    const token = encodeToken(user._id)
+    res.setHeader('Authorization', token)
     return res.status(201).json({ success: true })
 }
 
