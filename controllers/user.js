@@ -88,7 +88,6 @@ const signUp =  async (req, res, next) => {
     if (userFound) {
       return res.status(403).json({ error: { message: 'Email already registered' }})
     }
-    console.log(userFound)
     // Create a new User
     const user = new User({ firstName, lastName, email, password })
     await user.save()
@@ -99,11 +98,14 @@ const signUp =  async (req, res, next) => {
 }
 
 const signIn =  async (req, res, next) => {
-    console.log('call signin')
+  const token = encodeToken(req.user._id)
+  res.setHeader('Authorization', token)
+  return res.status(200).json({ success: true })
 }
 
 const secret =  async (req, res, next) => {
-    console.log('call secret')
+    // console.log('call secret method')
+    return res.status(200).json({ resource: true })
 }
 
 module.exports = {

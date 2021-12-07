@@ -5,18 +5,24 @@ const { validateBody, validateParam, schemas } = require('../helpers/routerHelpe
 // const router = express.Router()
 const userController = require('../controllers/user')
 
+// require passport
+const passport = require('passport')
+
+// require passport config
+require('../middlewares/passport')
+
 router.route('/')
   .get(userController.getAllUser)
   .post(validateBody(schemas.userSchema), userController.newUser)
 
 router.route('/signin')
-  .post(validateBody(schemas.authSignInSchema), userController.signIn)
+  .post(validateBody(schemas.authSignInSchema), passport.authenticate('local', { session: false }), userController.signIn)
 
 router.route('/signup')
   .post(validateBody(schemas.authSignUpSchema), userController.signUp)
 
 router.route('/secret')
-  .get(validateBody(schemas.authSignInSchema), userController.secret)
+  .get(passport.authenticate('jwt', { session: false }), userController.secret)
 
 router.route('/:userID')
   .get(validateParam(schemas.idSchema, 'userID'), userController.getUser)

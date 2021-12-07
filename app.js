@@ -8,6 +8,7 @@ const userRoute = require('./routes/user');
 const deckRoute = require('./routes/deck');
 
 const mongoClient = require('mongoose')
+const passport = require('passport')
 
 
 // setup connect mongodb by mongoose
@@ -18,6 +19,7 @@ mongoClient.connect('mongodb://192.168.0.103:27017/nodejsapistarter')
 
 const app = express()
 app.use(secureApp())
+app.use(passport.initialize());
 
 // middleware
 app.use(logger('dev'))
