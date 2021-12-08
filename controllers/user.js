@@ -14,6 +14,13 @@ const encodeToken = userID => {
   }, JWT_SECRET)
 }
 
+const authFacebook = async (req, res, next) => {
+  const { user } = req
+  const token = encodeToken(user._id)
+  res.setHeader('Authorization', token)
+  return res.status(200).json({ success: true })
+}
+
 const authGoogle = async (req, res, next) => {
   const { user } = req
   const token = encodeToken(user._id)
@@ -121,5 +128,6 @@ module.exports = {
     secret,
     signIn,
     signUp,
-    authGoogle
+    authGoogle,
+    authFacebook
 }
