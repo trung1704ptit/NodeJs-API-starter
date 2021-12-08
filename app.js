@@ -12,7 +12,7 @@ const passport = require('passport')
 
 
 // setup connect mongodb by mongoose
-mongoClient.connect('mongodb://192.168.0.103:27017/nodejsapistarter')
+mongoClient.connect('mongodb://localhost/nodejsapistarter')
     .then(() => console.log('✅ Connect to mongodb'))
     .catch(error => console.error(`❌ Connect database failed with error which is ${error}`))
 
