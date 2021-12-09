@@ -10,6 +10,7 @@ const deckRoute = require('./routes/deck');
 const mongoClient = require('mongoose')
 const passport = require('passport')
 
+const cors = require('cors')
 
 // setup connect mongodb by mongoose
 mongoClient.connect('mongodb://localhost/nodejsapistarter')
@@ -18,6 +19,8 @@ mongoClient.connect('mongodb://localhost/nodejsapistarter')
 
 
 const app = express()
+
+app.use(cors())
 app.use(secureApp())
 app.use(passport.initialize());
 
