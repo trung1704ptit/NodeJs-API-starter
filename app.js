@@ -20,7 +20,24 @@ mongoClient.connect('mongodb://localhost/nodejsapistarter')
 
 const app = express()
 
-app.use(cors())
+// app.use(cors())
+var allowedOrigins = ['http://localhost:3000',
+                      'http://yourapp.com'];
+app.use(cors({
+  origin: function(origin, callback){
+    // allow requests with no origin 
+    // (like mobile apps or curl requests)
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      var msg = 'The CORS policy for this site does not ' +
+                'allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  exposedHeaders: ['Content-Length', 'Authorization'],
+}));
+
 app.use(secureApp())
 app.use(passport.initialize());
 
@@ -63,5 +80,5 @@ app.use((err, req, res, next) => {
 })
 
 // start the server
-const port = app.get('port') || 3000;
+const port = app.get('port') || 5000;
 app.listen(port, () => console.log(`Server is listening on port ${port}`))

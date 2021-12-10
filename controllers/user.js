@@ -108,8 +108,18 @@ const signUp =  async (req, res, next) => {
 
 const signIn =  async (req, res, next) => {
   const token = encodeToken(req.user._id)
+  const user = req.user
   res.setHeader('Authorization', token)
-  return res.status(200).json({ success: true })
+  const userProfile = {
+    _id: user._id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    authFacebookID: user.authFacebookID,
+    authGoogleID: user.authGoogleID,
+    authType: user.authType,
+  } 
+  return res.status(200).json({ user: userProfile })
 }
 
 const secret =  async (req, res, next) => {
