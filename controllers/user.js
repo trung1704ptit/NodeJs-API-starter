@@ -18,14 +18,32 @@ const authFacebook = async (req, res, next) => {
   const { user } = req
   const token = encodeToken(user._id)
   res.setHeader('Authorization', token)
-  return res.status(200).json({ success: true })
+  const userProfile = {
+    _id: user._id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    authFacebookID: user.authFacebookID,
+    authGoogleID: user.authGoogleID,
+    authType: user.authType,
+  } 
+  return res.status(200).json({ user: userProfile })
 }
 
 const authGoogle = async (req, res, next) => {
   const { user } = req
   const token = encodeToken(user._id)
   res.setHeader('Authorization', token)
-  return res.status(200).json({ success: true })
+  const userProfile = {
+    _id: user._id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    authFacebookID: user.authFacebookID,
+    authGoogleID: user.authGoogleID,
+    authType: user.authType,
+  } 
+  return res.status(200).json({ user: userProfile })
 }
 
 const getUser = async (req, res, next) => {
