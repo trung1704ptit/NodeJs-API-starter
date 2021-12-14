@@ -6,15 +6,15 @@ const secureApp = require('helmet');
 const logger = require('morgan')
 const userRoute = require('./routes/user');
 const deckRoute = require('./routes/deck');
-
 const mongoClient = require('mongoose')
 const passport = require('passport')
+const envConfig = require('./configs')
 
 const cors = require('cors')
 
 // setup connect mongodb by mongoose
-mongoClient.connect('mongodb://localhost/nodejsapistarter')
-    .then(() => console.log('✅ Connect to mongodb'))
+mongoClient.connect(envConfig.MONGODB_URL)
+    .then(() => console.log('✅ Connected to mongodb'))
     .catch(error => console.error(`❌ Connect database failed with error which is ${error}`))
 
 
